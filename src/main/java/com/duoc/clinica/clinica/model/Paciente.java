@@ -2,18 +2,21 @@ package com.duoc.clinica.clinica.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "medico")
+@Table(name= "especialidad")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Medico {
+public class Paciente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_medico")
+    @Column(name = "id_paciente")
     private Integer id;
     @Column(length = 12, nullable = false, unique = true)
     private String run;
@@ -21,17 +24,13 @@ public class Medico {
     private String nombre;
     @Column(length = 50, nullable = false)
     private String apellido;
-    @Column(name = "fecha_contrato", nullable = false)
-    private LocalDate fechaContrato;
-    @Column(name = "sueldo_base", nullable = false)
-    private Integer sueldoBase;
+    @Column(name = "fecha_nacimiento", nullable = false)
+    private LocalDate fechaNacimiento;
     @Column(length = 100, nullable = false, unique = true)
     private String correo;
     @Column(length = 20, nullable = false, unique = true)
     private String telefono;
-
     @ManyToOne
-    @JoinColumn(name = "id_especialidad", nullable = false)
-    private Especialidad especialidad;
-
+    @JoinColumn(name = "id_prevision", nullable = false)
+    private Prevision prevision;
 }

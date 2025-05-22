@@ -1,18 +1,13 @@
 package com.duoc.clinica.clinica.model;
 
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
-@Table(name = "especialidad")
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-public class Especialidad {
+@Table(name="id_estado")
+public class Estado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_especialidad")
+    @Column(name = "id_estado")
     private Integer id;
 
     @Column(length = 50, nullable = false)
