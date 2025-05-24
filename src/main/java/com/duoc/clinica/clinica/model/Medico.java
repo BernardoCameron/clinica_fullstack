@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "medico")
@@ -13,25 +14,34 @@ import java.time.LocalDate;
 public class Medico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_medico")
-    private Integer id;
-    @Column(length = 12, nullable = false, unique = true)
-    private String run;
-    @Column(length = 50, nullable = false)
+    private Long id_medico;
+
+    @Column(nullable = false)
     private String nombre;
-    @Column(length = 50, nullable = false)
+
+    @Column(nullable = false)
     private String apellido;
-    @Column(name = "fecha_contrato", nullable = false)
-    private LocalDate fechaContrato;
-    @Column(name = "sueldo_base", nullable = false)
-    private Integer sueldoBase;
-    @Column(length = 100, nullable = false, unique = true)
+
+    @Column(nullable = false, unique = true)
+    private String run;
+
+    @Column(nullable = false, unique = true)
     private String correo;
-    @Column(length = 20, nullable = false, unique = true)
+
+    @Column(nullable = false, unique = true)
     private String telefono;
 
-    @ManyToOne
-    @JoinColumn(name = "id_especialidad", nullable = false)
+    @Column(nullable = false)
+    private LocalDate fechaIngreso;
+
+    @Column(nullable = false)
+    private Double sueldoBase;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "especialidad_id", nullable = false)
     private Especialidad especialidad;
+
+    @OneToMany(mappedBy = "medico")
+    private List<Atencion> atenciones;
 
 }

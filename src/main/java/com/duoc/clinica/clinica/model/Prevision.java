@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name="prevision")
 @Data
@@ -14,11 +16,12 @@ public class Prevision {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_prevision")
-    private Integer id;
-
-    @Column(length = 50, nullable = false)
+    private Long id;
+    @Column(length = 50, nullable = false, unique = true)
     private String nombre;
+    @Column(nullable = false)
+    private Double cobertura;
 
-    @Column(length = 200, nullable = false)
-    private String cobertura;
+    @OneToMany(mappedBy = "prevision")
+    private List<Paciente> pacientes;
 }

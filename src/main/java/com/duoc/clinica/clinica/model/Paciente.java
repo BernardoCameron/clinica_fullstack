@@ -6,9 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-@Table(name= "especialidad")
+@Table(name= "paciente")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paciente")
-    private Integer id;
+    private Long id;
     @Column(length = 12, nullable = false, unique = true)
     private String run;
     @Column(length = 50, nullable = false)
@@ -30,7 +31,11 @@ public class Paciente {
     private String correo;
     @Column(length = 20, nullable = false, unique = true)
     private String telefono;
-    @ManyToOne
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_prevision", nullable = false)
     private Prevision prevision;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<Atencion> atenciones;
 }

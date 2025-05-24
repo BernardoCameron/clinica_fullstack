@@ -17,29 +17,25 @@ public class Atencion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_atencion")
-    private Integer id;
-
+    private Long id;
     @Column(name = "fecha_atencion", nullable = false)
     private LocalDate fechaAtencion;
-
     @Column(name = "hora_atencion", nullable = false)
     private LocalTime horaAtencion;
-
     @Column(nullable = false)
-    private Integer costo;
-
+    private Double costo;
     @Column(length = 300, nullable = false)
     private String comentario;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_estado", nullable = false)
     private Estado estado;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_paciente", nullable = false)
     private Paciente paciente;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_medico", nullable = false)
     private Medico medico;
 }

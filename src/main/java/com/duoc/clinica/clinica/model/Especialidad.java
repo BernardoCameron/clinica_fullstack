@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Table(name = "especialidad")
 @Entity
 @NoArgsConstructor
@@ -13,11 +15,14 @@ public class Especialidad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_especialidad")
-    private Integer id;
+    private Long id;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = false, unique = true)
     private String nombre;
 
     @Column(length = 200, nullable = false)
     private String descripcion;
+
+    @OneToMany(mappedBy = "especialidad")
+    private List<Medico> medicos;
 }
