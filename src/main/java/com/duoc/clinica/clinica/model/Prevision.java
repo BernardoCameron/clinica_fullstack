@@ -1,5 +1,6 @@
 package com.duoc.clinica.clinica.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +24,6 @@ public class Prevision {
     private Double cobertura;
 
     @OneToMany(mappedBy = "prevision")
+    @JsonIgnore
     private List<Paciente> pacientes;
 }
