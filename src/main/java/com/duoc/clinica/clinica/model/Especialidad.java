@@ -1,8 +1,10 @@
 package com.duoc.clinica.clinica.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class Especialidad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +27,6 @@ public class Especialidad {
     private String descripcion;
 
     @OneToMany(mappedBy = "especialidad")
+    @JsonIgnore
     private List<Medico> medicos;
 }

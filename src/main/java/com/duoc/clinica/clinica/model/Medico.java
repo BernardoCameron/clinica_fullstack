@@ -1,7 +1,9 @@
 package com.duoc.clinica.clinica.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
@@ -11,6 +13,7 @@ import java.util.List;
 @Table(name = "medico")
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class Medico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +42,7 @@ public class Medico {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "especialidad_id", nullable = false)
+    @JsonIgnore
     private Especialidad especialidad;
 
     @OneToMany(mappedBy = "medico")
