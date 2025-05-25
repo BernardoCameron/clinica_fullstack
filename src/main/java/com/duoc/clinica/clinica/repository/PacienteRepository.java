@@ -12,5 +12,6 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     List<Paciente> findByNombreAndApellido(String nombre, String apellido);
     List<Paciente> findByFechaNacimientoAfter(LocalDate fechaLimite);
     List<Paciente> findByFechaNacimientoBefore(LocalDate fechaLimite);
+    List<Paciente> findByPrevision_NombreIgnoreCase(String nombre);
 
 }

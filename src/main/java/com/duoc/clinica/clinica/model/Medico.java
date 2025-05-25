@@ -17,7 +17,8 @@ import java.util.List;
 public class Medico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_medico;
+    @Column(name = "id_medico")
+    private Long id;
 
     @Column(nullable = false)
     private String nombre;
@@ -46,6 +47,8 @@ public class Medico {
     private Especialidad especialidad;
 
     @OneToMany(mappedBy = "medico")
+    @JsonIgnore
     private List<Atencion> atenciones;
+
 
 }

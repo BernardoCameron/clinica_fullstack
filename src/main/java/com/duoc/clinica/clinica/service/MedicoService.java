@@ -59,14 +59,13 @@ public class MedicoService {
         Medico medico = medicoRepository.findById(idMedico)
                 .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
 
-        List<Atencion> atenciones = atencionRepository.findMedicoById(idMedico);
+        List<Atencion> atenciones = atencionRepository.findByMedico_Id(idMedico);
+        double total = 0.0;
 
-        double totalAtenciones = atenciones.stream()
-                .mapToDouble(a -> a.getCosto())
-                .sum();
+        for (Atencion atencion : atenciones) {
+            total += atencion.getCosto();
+        }
 
-        double extra = totalAtenciones * 0.20;
-
-        return medico.getSueldoBase() + extra;
+        return medico.getSueldoBase() + (total * 0.20);
     }
 }

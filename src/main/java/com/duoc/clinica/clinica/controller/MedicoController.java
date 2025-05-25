@@ -42,8 +42,8 @@ public class MedicoController {
         return ResponseEntity.ok(medicoService.conAntiguedadMayorA(anios));
     }
 
-    @GetMapping("/{id}/sueldo")
-    public ResponseEntity<Double> calcularSueldoTotal(@PathVariable Long id) {
+    @GetMapping("/sueldo/{id}")
+    public ResponseEntity<Double> calcularSueldo(@PathVariable Long id) {
         return ResponseEntity.ok(medicoService.calcularSueldoTotal(id));
     }
 }

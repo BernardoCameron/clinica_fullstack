@@ -1,11 +1,14 @@
 package com.duoc.clinica.clinica.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table(name="estado")
+@Data
 public class Estado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,5 +20,6 @@ public class Estado {
     private String descripcion;
 
     @OneToMany(mappedBy = "estado")
+    @JsonIgnore
     private List<Atencion> atenciones;
 }

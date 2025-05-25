@@ -1,7 +1,9 @@
 package com.duoc.clinica.clinica.service;
 
+import com.duoc.clinica.clinica.model.Atencion;
 import com.duoc.clinica.clinica.model.Paciente;
 import com.duoc.clinica.clinica.model.Prevision;
+import com.duoc.clinica.clinica.repository.AtencionRepository;
 import com.duoc.clinica.clinica.repository.PacienteRepository;
 import com.duoc.clinica.clinica.repository.PrevisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class PacienteService {
     private PacienteRepository pacienteRepository;
     @Autowired
     private PrevisionRepository previsionRepository;
+    @Autowired
+    private AtencionRepository atencionRepository;
 
     public Paciente crearPaciente(Paciente paciente) {
         if (paciente.getPrevision() == null) {
@@ -49,5 +53,24 @@ public class PacienteService {
     public List<Paciente> pacientesMayoresDe(int edad) {
         LocalDate fechaLimite = LocalDate.now().minusYears(edad);
         return pacienteRepository.findByFechaNacimientoBefore(fechaLimite);
+    }
+
+    public List<Paciente> pacientesPorPrevision(String nombrePrevision) {
+        return pacienteRepository.findByPrevision_NombreIgnoreCase(nombrePrevision);
+    }
+
+    public Double calcularDeudaPaciente(Long idPaciente) {
+        Paciente paciente = pacienteRepository.findById(idPaciente)
+                .orElseThrow(() -> new RuntimeException("Paciente no encontrado"));
+
+        List<Atencion> atenciones = atencionRepository.findByPaciente_Id(idPaciente);
+        double total = 0.0;
+
+        for (Atencion atencion : atenciones) {
+            total += atencion.getCosto();
+        }
+
+        double cobertura = paciente.getPrevision().getCobertura();
+        return total * (1 - cobertura);
     }
 }

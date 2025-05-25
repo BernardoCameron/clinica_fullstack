@@ -1,6 +1,7 @@
 package com.duoc.clinica.clinica.controller;
 
 import com.duoc.clinica.clinica.model.Paciente;
+import com.duoc.clinica.clinica.service.AtencionService;
 import com.duoc.clinica.clinica.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import java.util.List;
 public class PacienteController {
     @Autowired
     private PacienteService pacienteService;
+    @Autowired
+    private AtencionService atencionService;
 
     @PostMapping
     public ResponseEntity<Paciente> crearPaciente(@RequestBody Paciente paciente) {
@@ -46,5 +49,15 @@ public class PacienteController {
     @GetMapping("/buscar/edad/mayor-a/{edad}")
     public ResponseEntity<List<Paciente>> pacientesMayoresDe(@PathVariable int edad) {
         return ResponseEntity.ok(pacienteService.pacientesMayoresDe(edad));
+    }
+
+    @GetMapping("/deuda/{id}")
+    public ResponseEntity<Double> calcularDeuda(@PathVariable Long id) {
+        return ResponseEntity.ok(pacienteService.calcularDeudaPaciente(id));
+    }
+
+    @GetMapping("/prevision/{nombre}")
+    public ResponseEntity<List<Paciente>> porPrevision(@PathVariable String nombre) {
+        return ResponseEntity.ok(pacienteService.pacientesPorPrevision(nombre));
     }
 }

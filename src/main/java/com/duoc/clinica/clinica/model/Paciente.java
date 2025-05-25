@@ -1,5 +1,6 @@
 package com.duoc.clinica.clinica.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,5 +38,6 @@ public class Paciente {
     private Prevision prevision;
 
     @OneToMany(mappedBy = "paciente")
+    @JsonIgnore
     private List<Atencion> atenciones;
 }
