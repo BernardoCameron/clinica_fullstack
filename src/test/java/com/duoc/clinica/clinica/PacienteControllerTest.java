@@ -32,8 +32,6 @@ public class PacienteControllerTest {
     @MockBean
     private PacienteService pacienteService;
 
-    @MockBean
-    private AtencionService atencionService;
 
     /**
      * Prueba que el endpoint GET /api/v1/pacientes
