@@ -164,7 +164,7 @@ public class PacienteControllerTest {
      * retorne 200 OK cuando existen pacientes menores a la edad dada.
      */
     @Test
-    void buscarPacientesMenoresDeEdad_conResultados() throws Exception {
+    void buscarPacientesMenoresDeEdadconResultados() throws Exception {
         int edad = 40;
         Paciente paciente = new Paciente();
         paciente.setId(1L);
@@ -183,7 +183,7 @@ public class PacienteControllerTest {
      * retorne 204 No Content cuando no existen pacientes menores a la edad dada.
      */
     @Test
-    void buscarPacientesMenoresDeEdad_sinResultados() throws Exception {
+    void buscarPacientesMenoresDeEdadSinResultados() throws Exception {
         int edad = 1;
 
         when(pacienteService.pacientesMenoresDe(edad)).thenReturn(List.of());
@@ -197,7 +197,7 @@ public class PacienteControllerTest {
      * retorne 200 OK cuando existen pacientes mayores a la edad dada.
      */
     @Test
-    void buscarPacientesMayoresDeEdad_conResultados() throws Exception {
+    void buscarPacientesMayoresDeEdadConResultados() throws Exception {
         int edad = 30;
 
         Paciente paciente = new Paciente();
@@ -218,7 +218,7 @@ public class PacienteControllerTest {
      * retorne 204 No Content cuando no existen pacientes mayores a la edad dada.
      */
     @Test
-    void buscarPacientesMayoresDeEdad_sinResultados() throws Exception {
+    void buscarPacientesMayoresDeEdadSinResultados() throws Exception {
         int edad = 120;
 
         when(pacienteService.pacientesMayoresDe(edad)).thenReturn(List.of());
@@ -232,7 +232,7 @@ public class PacienteControllerTest {
      * retorne 200 OK con el monto correcto cuando el paciente tiene deuda.
      */
     @Test
-    void calcularDeudaPaciente_existente() throws Exception {
+    void calcularDeudaPacienteExistente() throws Exception {
         Long idPaciente = 1L;
         double deuda = 15000;
 
@@ -248,7 +248,7 @@ public class PacienteControllerTest {
      * retorne 200 OK con 0.0 cuando el paciente no tiene deuda.
      */
     @Test
-    void calcularDeudaPaciente_sinDeuda() throws Exception {
+    void calcularDeudaPacienteSinDeuda() throws Exception {
         Long idPaciente = 2L;
 
         when(pacienteService.calcularDeudaPaciente(idPaciente)).thenReturn(0.0);
@@ -263,7 +263,7 @@ public class PacienteControllerTest {
      * retorne 200 OK cuando existen pacientes con la prevision indicada.
      */
     @Test
-    void pacientesPorPrevision_existente() throws Exception {
+    void pacientesPorPrevisionExistente() throws Exception {
         String prevision = "FONASA";
 
         Paciente paciente = new Paciente();
@@ -284,7 +284,7 @@ public class PacienteControllerTest {
      * retorne 204 No Content cuando no hay pacientes con esa prevision.
      */
     @Test
-    void pacientesPorPrevision_sinResultados() throws Exception {
+    void pacientesPorPrevisionSinResultados() throws Exception {
         String prevision = "CAPREDENA";
 
         when(pacienteService.pacientesPorPrevision(prevision)).thenReturn(List.of());

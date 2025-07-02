@@ -7,9 +7,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +37,11 @@ public class MedicoController {
     })
 
     @PostMapping
-    public ResponseEntity<Medico> crearMedico(@RequestBody Medico medico) {
+    public ResponseEntity<?> crearMedico(@Valid @RequestBody Medico medico, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body("Error de validación");
+        }
+
         Medico creado = medicoService.crearMedico(medico);
         return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
@@ -83,12 +89,15 @@ public class MedicoController {
             @Parameter(description = "Apellido del médico", required = true)
             @RequestParam String apellido) {
 
+        if (nombre.isBlank() || apellido.isBlank()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         List<Medico> resultado = medicoService.buscarPorNombreYApellido(nombre, apellido);
 
         if (resultado.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-
         return ResponseEntity.ok(resultado);
     }
 
@@ -110,6 +119,10 @@ public class MedicoController {
     public ResponseEntity<List<Medico>> conAntiguedadMenorA(
             @Parameter(description = "Cantidad de años de antigüedad máxima", example = "5")
             @PathVariable int anios) {
+
+        if (anios <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
 
         List<Medico> resultado = medicoService.conAntiguedadMenorA(anios);
 
@@ -138,6 +151,9 @@ public class MedicoController {
     public ResponseEntity<List<Medico>> conAntiguedadMayorA(
             @Parameter(description = "Cantidad de años de antigüedad mínima", example = "10")
             @PathVariable int anios) {
+        if (anios <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
 
         List<Medico> resultado = medicoService.conAntiguedadMayorA(anios);
 
@@ -164,6 +180,11 @@ public class MedicoController {
     public ResponseEntity<Double> calcularSueldo(
             @Parameter(description = "ID del médico", required = true, example = "1")
             @PathVariable Long id) {
+
+        if (id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
         Double sueldo = medicoService.calcularSueldoTotal(id);
 
         if (sueldo == null) {
@@ -171,4 +192,7 @@ public class MedicoController {
         }
         return ResponseEntity.ok(sueldo);
     }
+
+
+
 }
