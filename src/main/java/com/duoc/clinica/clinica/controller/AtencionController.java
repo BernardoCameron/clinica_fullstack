@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -40,7 +42,11 @@ public class AtencionController {
     })
 
     @PostMapping
-    public ResponseEntity<Atencion> crear(@RequestBody Atencion atencion) {
+    public ResponseEntity<?> crear(@Valid @RequestBody Atencion atencion, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body("Error en los datos de la atencion");
+        }
+
         Atencion creada = atencionService.crearAtencion(atencion);
         return ResponseEntity.status(HttpStatus.CREATED).body(creada);
     }
@@ -249,6 +255,10 @@ public class AtencionController {
     public ResponseEntity<List<Atencion>> porEstado(
             @Parameter(description = "Nombre del estado", example = "realizada")
             @PathVariable String nombre) {
+
+        if (nombre == null || nombre.trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
 
         List<Atencion> lista = atencionService.buscarPorEstado(nombre);
 
